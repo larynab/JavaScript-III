@@ -37,11 +37,6 @@ function CharacterStats(attributes) {
   };
 };
 
-const paul = new CharacterStats({
-  healthPoints: "5hp",
-  name: "Super Paul"
-});
-console.log(paul.destroy());
 /*
   === Humanoid (Having an appearance or character resembling that of a human.) ===
   * team
@@ -61,12 +56,28 @@ function Humanoid(stats){
     return `${this.name} offers a greeting in ${this.language}`;
   };
 }; 
- 
-/*
+ /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
   * Instances of CharacterStats should have all of the same properties as GameObject.
 */
+
+//Stretch Villain constructor
+/*Give the Hero and Villains different methods that could be used to 
+remove health points from objects which could result in destruction if health gets to 0 or drops below 0;*/
+function Villain(mod){
+  Humanoid.call(this, mod);
+  this.poisonDagger = function() {
+    return `${this.name} throws a deadly poisoned dagger! Damage for 10 health points.`;
+  };
+};
+
+function Hero(mod){
+  Humanoid.call(this, mod);
+  this.charmingEyes = function() {
+    return `${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.`;
+  };
+};
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
 
@@ -120,6 +131,41 @@ function Humanoid(stats){
     ],
     language: 'Elvish',
   });
+  // Stretch * Create two new objects, one a villain and one a hero and fight it out with methods!
+ const paul = new Hero({
+  createdAt: new Date(),
+  dimensions: {
+    length: 2,
+    width: 3,
+    height: 5,
+  },
+  healthPoints: 5,
+  name: "Super Paul",
+  team: 'Sky Kingdom',
+  weapons: [
+    'Fists',
+    'Iron Muscles',
+  ],
+  language: 'English'
+});
+ 
+ const eric = new Villain({
+   createdAt: new Date(),
+  dimensions: {
+    length: 1,
+    width: 2,
+    height: 3,
+  },
+  healthPoints: 7,
+  name: "Exilimor",
+  team: 'Nether Warp',
+  weapons: [
+    'Electron Whip',
+    'Plasma Flak Cannon',
+  ],
+  language: 'Enrwiw'
+  });
+
 
   console.log(mage.createdAt); // Today's date
   console.log(archer.dimensions); // { length: 1, width: 2, height: 4 }
@@ -131,9 +177,12 @@ function Humanoid(stats){
   console.log(archer.greet()); // Lilith offers a greeting in Elvish.
   console.log(mage.takeDamage()); // Bruce took damage.
   console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
+  console.log(paul.charmingEyes()); // ${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.
+  console.log(eric.poisonDagger()); // ${this.name} throws a deadly poisoned dagger! Damage for 10 health points.
+  console.log(paul.destroy()); // Super Paul was removed from game.
 
-
-  // Stretch task: 
+  // Stretch task: Complete 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
   // * Give the Hero and Villains different methods that could be used to remove health points from objects which could result in destruction if health gets to 0 or drops below 0;
   // * Create two new objects, one a villain and one a hero and fight it out with methods!
+  // Complete
