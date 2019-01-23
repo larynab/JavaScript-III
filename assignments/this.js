@@ -18,17 +18,39 @@ function sayQuack(sound) {
     console.log(this);
     return sound; 
 };
-
 console.log(sayQuack("QUACK"));
 
 // Principle 2
 
 // code example for Implicit Binding
-
+const myPen = {
+    pushButton: "(click click)",
+    holdingPen: function(name){
+        console.log(`${this.pushButton} Hi there user ${name}.`);
+    }
+};
+myPen.holdingPen("Alaj");
 // Principle 3
 
 // code example for New Binding
+function WeaponA(weaponName){
+    this.weaponText = "Alpha Tier";
+    this.weaponName = weaponName;
+    this.rules = function () {
+     console.log(this.weaponText + this.weaponName)
+    };
+    console.log(this);
+};
+const swordOfAtlantis = new WeaponA(' Sword of Atlantis');
+const axeOfEmbers = new WeaponA(' Axe of Embers');
+const daggerObsidian = new WeaponA(' Obsidian Dagger');
+swordOfAtlantis.rules();
 
 // Principle 4
 
+
 // code example for Explicit Binding
+swordOfAtlantis.rules.call(axeOfEmbers);
+axeOfEmbers.rules.apply(daggerObsidian);
+
+swordOfAtlantis.rules();
