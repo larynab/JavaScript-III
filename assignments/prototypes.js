@@ -17,9 +17,13 @@
 function GameObject(property) {
   this.createdAt = property.createdAt;
   this.dimensions = property.dimensions;
-  this.destroy = function() {
+  /*this.destroy = function() {
     return `${this.name} was removed from the game`
   };
+  */
+};
+GameObject.prototype.destroy = function() {
+  console.log( `${this.name} was removed from the game`);
 };
 /*
   === CharacterStats ===
@@ -32,9 +36,15 @@ function CharacterStats(attributes) {
   GameObject.call(this, attributes);
   this.healthPoints = attributes.healthPoints;
   this.name = attributes.name;
-  this.takeDamage = function() {
+  /*this.takeDamage = function() {
     return `${this.name} took damage.`;
   };
+  */
+};
+CharacterStats.prototype = GameObject.prototype;
+
+CharacterStats.prototype.takeDamage = function() {
+    console.log( `${this.name} took damage.`);
 };
 
 /*
@@ -52,10 +62,16 @@ function Humanoid(stats){
   this.team = stats.team;
   this.weapons = stats.weapons;
   this.language = stats.language;
-  this.greet = function() {
+  /* this.greet = function() {
     return `${this.name} offers a greeting in ${this.language}`;
   };
+  */
 }; 
+Humanoid.prototype = CharacterStats.prototype;
+
+Humanoid.prototype.greet = function () {
+    console.log( `${this.name} offers a greeting in ${this.language}`);
+};
  /*
   * Inheritance chain: GameObject -> CharacterStats -> Humanoid
   * Instances of Humanoid should have all of the same properties as CharacterStats and GameObject.
@@ -67,16 +83,28 @@ function Humanoid(stats){
 remove health points from objects which could result in destruction if health gets to 0 or drops below 0;*/
 function Villain(mod){
   Humanoid.call(this, mod);
-  this.poisonDagger = function() {
+  /*this.poisonDagger = function() {
     return `${this.name} throws a deadly poisoned dagger! Damage for 10 health points.`;
   };
+  */
+};
+Villain.prototype = Humanoid.prototype;
+
+Villain.prototype.poisonDagger = function () {
+    console.log( `${this.name} throws a deadly poisoned dagger! Damage for 10 health points.`);
 };
 
 function Hero(mod){
   Humanoid.call(this, mod);
-  this.charmingEyes = function() {
+  /*this.charmingEyes = function() {
     return `${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.`;
   };
+  */
+};
+Hero.prototype = Humanoid.prototype;
+
+Hero.prototype.charmingEyes = function () {
+    console.log( `${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.`);
 };
 
 // Test you work by un-commenting these 3 objects and the list of console logs below:
@@ -174,12 +202,12 @@ function Hero(mod){
   console.log(swordsman.team); // The Round Table
   console.log(mage.weapons); // Staff of Shamalama
   console.log(archer.language); // Elvish
-  console.log(archer.greet()); // Lilith offers a greeting in Elvish.
-  console.log(mage.takeDamage()); // Bruce took damage.
-  console.log(swordsman.destroy()); // Sir Mustachio was removed from the game.
-  console.log(paul.charmingEyes()); // ${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.
-  console.log(eric.poisonDagger()); // ${this.name} throws a deadly poisoned dagger! Damage for 10 health points.
-  console.log(paul.destroy()); // Super Paul was removed from game.
+ archer.greet(); // Lilith offers a greeting in Elvish.
+ mage.takeDamage(); // Bruce took damage.
+ swordsman.destroy(); // Sir Mustachio was removed from the game.
+ paul.charmingEyes(); // ${this.name} stares deeply into your eyes, you feel feverish and overwhelmed, weakened.
+ eric.poisonDagger(); // ${this.name} throws a deadly poisoned dagger! Damage for 10 health points.
+ paul.destroy(); // Super Paul was removed from game.
 
   // Stretch task: Complete 
   // * Create Villain and Hero constructor functions that inherit from the Humanoid constructor function.  
